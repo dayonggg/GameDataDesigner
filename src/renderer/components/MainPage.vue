@@ -1,21 +1,41 @@
 <template>
-	<div class="scene">
-		<div class="secne-list">
-			<el-button type="primary" size="mini" @click="test()">
-				open
-			</el-button>
-			<ul class="secne-list-item">
-				<li v-for="s in mapdata.maps" @click="liclick(s)">
-					{{ s.title }}
-				</li>
-			</ul>
-		</div>
-		<el-tabs v-model="editableTabsValue" type="card" closable @tab-remove="removeTab">
-			<el-tab-pane v-for="(item, index) in editableTabs" :key="item.id" :label="item.title" :name="item.id">
-				<!-- {{item.scencefile}} -->
-				<div :id='"map-"+item.id' class="laya-content">{{item.scencefile}}</div>
-			</el-tab-pane>
-		</el-tabs>
+	<div class="page">
+		<el-container>
+			<el-header>
+				<el-row class="title">Game Designer</el-row>
+				<el-row class="toolbar">
+					<el-button size="mini" icon="el-icon-document" @click="load()"></el-button>
+					<el-button-group v-if="isload" class="toolbar-group-add">
+						<el-button icon="el-icon-plus" size="mini"></el-button>
+						<el-button icon="el-icon-picture-outline" size="mini"></el-button>
+						<el-button icon="el-icon-menu" size="mini"></el-button>
+					</el-button-group>
+				</el-row>
+			</el-header>
+			<el-container>
+				<el-aside v-show="showscenelist" width="200px" class="main-scene-list">
+					<el-card class="box-card">
+						<div v-for="s in mapdata.maps" @click="liclick(s)" class="scene-item">
+							{{ s.title }}
+						</div>
+					</el-card>
+				</el-aside>
+				<el-main class="el-main-content">
+					<el-tabs v-model="editableTabsValue" type="border-card" closable @tab-remove="removeTab">
+						<el-tab-pane v-for="(item, index) in editableTabs" :key="item.id" :label="item.title" :name="item.id">
+							<el-container>
+								<el-main>
+									<div :id='"map-"+item.id' class="laya-content">{{item.scencefile}}</div>
+								</el-main>
+								<el-aside width="300px">
+									123
+								</el-aside>
+							</el-container>
+						</el-tab-pane>
+					</el-tabs>
+				</el-main>
+			</el-container>
+		</el-container>
 	</div>
 </template>
 
@@ -26,32 +46,37 @@
 	export default {
 		data() {
 			return {
+				isload: false,
+				showscenelist:false,
 				editableTabsValue: '',
 				editableTabs: [],
-				mapdata:{}
+				mapdata: {}
 			}
 		},
 
 		methods: {
-			test() {
+			load() {
 				let self = this;
 				ipc.ipcRenderer.send('open-project-file');
-				ipc.ipcRenderer.on('selected-project-file',(e,path)=>{
+				ipc.ipcRenderer.on('selected-project-file', (e, path) => {
 					let proPath = path.toString();
 					fs.readFile(proPath, function(err, data) {
 						if (err) {
 							throw err;
 						}
-						localStorage.setItem('projectPath',proPath);
-						console.log(JSON.parse(data.toString()));
-						// console.log(self);
+						localStorage.setItem('projectPath', proPath);
+						//初始化数据
+						self.editableTabsValue = '';
+						self.editableTabs = [];
 						self.mapdata = JSON.parse(data.toString());
-						console.log(self);
+						self.isload = true;
+						self.showscenelist =true;
 					});
 				})
 			},
 			liclick(t) {
 				let etabs = this.editableTabs;
+				console.log(this);
 				let isnew = true;
 				etabs.forEach((f, index) => {
 					if (f.id == t.id) {
@@ -73,7 +98,7 @@
 				console.log(targetName);
 				if (activeName === targetName) {
 					tabs.forEach((tab, index) => {
-						console.log(tab,index);
+						console.log(tab, index);
 						if (tab.id === targetName) {
 							let nextTab = tabs[index + 1] || tabs[index - 1];
 							if (nextTab) {
@@ -90,28 +115,75 @@
 	}
 </script>
 
-<style>
-	.secne-list {
-		float: left;
+<style scoped>
+	.page,
+	.el-container,
+	.el-aside,
+	.el-main,
+	.el-tabs,
+	.el-tab-pane {
 		height: 100%;
-		width: 200px;
-	}
-
-	.secne-list-item {
 		width: 100%;
-		height: calc(100%-20);
+		padding: 0px;
 	}
 
-	.el-tabs {
-		float: left;
-		height: 100%;
-		width: calc(100% - 210px);
+	.el-header {
+		background-color: #fffefa;
 	}
 
-	.scene {
+	.title {
+		text-align: center;
+		height: 20px;
+		line-height: 20px;
+		font-size: 12px;
+	}
+
+	.toolbar {
+		height: 36px;
+		padding: 4px;
+	}
+
+	.toolbar-group-add {
+		margin-left: 40px;
+	}
+
+	.main-scene-list,
+	.el-main-content {
+		padding: 0px;
+		border: none;
+		border-top: #d8ca9e 1px solid;
+	}
+
+	.main-scene-list {
+		border-right: #d8ca9e 1px solid;
+	}
+
+	.scene-item {
+		padding: 8px 20px;
+		font-size: 12px;
+		display: block;
+	}
+
+	.scene-item:active {
+		color: #0000FF;
+	}
+
+	.scene-item:hover {
+		background-color: #e0edd3;
+	}
+
+	.box-card {
+		height: calc(100% - 5px);
 		width: 100%;
+	}
+
+	.el-card__body {
+		padding: 0px !important
+	}
+	.laya-content{
+		background-color: #000;
 		height: 100%;
-		min-height: 500px;
-		min-width: 500px;
+		height: 100%;
+		color: #fff;
 	}
 </style>

@@ -1,0 +1,24 @@
+.el-card__body {
+	padding: 20px 0px !important;
+}
+
+.el-tabs__item {
+	padding: 0px 10px !important;
+	height: 30px !important;
+	line-height: 30px !important;
+	font-size: 12px !important;
+}
+
+.el-card,
+.el-tabs {
+	background-color: #fffae8 !important;
+	border: none !important;
+}
+.el-tabs--border-card>.el-tabs__content{
+	padding: 0px !important;
+}
+.el-tabs__content{
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+}

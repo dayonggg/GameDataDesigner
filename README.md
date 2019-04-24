@@ -1,4 +1,4 @@
-# GameDataDesigner
+# GameDesigner
 
 > 用于数据可视化编辑的内部使用工具
 

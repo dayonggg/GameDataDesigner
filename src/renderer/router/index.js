@@ -10,11 +10,6 @@ export default new Router({
       name: 'main-page',
       component: require('@/components/MainPage').default
     },
-		{
-		  path: '@/components',
-			name:'project-tree',
-			component: require('@/components/ProjectTree').default
-		},
     {
       path: '*',
       redirect: '/'

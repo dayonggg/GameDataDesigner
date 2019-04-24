@@ -11,12 +11,14 @@
 </script>
 
 <style>
-	html,body{
+	@import '/src/renderer/assets/style.css';
+	
+	html,
+	body {
 		margin: 0px;
 		padding: 0px;
 		width: 100%;
 		height: 100%;
-		background-color: #fffefa;
 	}
 	
 	#app{

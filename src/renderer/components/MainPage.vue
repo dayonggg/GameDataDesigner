@@ -12,8 +12,8 @@
 					</el-button-group>
 				</el-row>
 			</el-header>
-			<el-container>
-				<el-aside v-show="showscenelist" width="200px" class="main-scene-list">
+			<el-container class="main-scene">
+				<el-aside v-show="showscenelist" width="160px" class="main-scene-list">
 					<el-card class="box-card">
 						<div v-for="s in mapdata.maps" @click="liclick(s)" class="scene-item">
 							{{ s.title }}
@@ -22,13 +22,21 @@
 				</el-aside>
 				<el-main class="el-main-content">
 					<el-tabs v-model="editableTabsValue" type="border-card" closable @tab-remove="removeTab">
-						<el-tab-pane v-for="(item, index) in editableTabs" :key="item.id" :label="item.title" :name="item.id">
+						<el-tab-pane v-for="item in editableTabs" :key="item.id" :label="item.title" :name="item.id">
 							<el-container>
 								<el-main>
 									<div :id='"map-"+item.id' class="laya-content">{{item.scencefile}}</div>
 								</el-main>
-								<el-aside width="300px">
-									123
+								<el-aside width="240px">
+									<el-collapse>
+										<el-collapse-item v-for="item in mapdata.lmgroup" :title="item.label" :name="item.typeid">
+											<el-row>
+												<el-col :span="6" v-for="lm in item.models">
+													<div>{{lm.label}}</div>
+												</el-col>
+											</el-row>
+										</el-collapse-item>
+									</el-collapse>
 								</el-aside>
 							</el-container>
 						</el-tab-pane>
@@ -42,12 +50,13 @@
 <script>
 	import fs from 'fs'
 	import ipc from 'electron'
+	import d from '../commonData.js'
 
 	export default {
 		data() {
 			return {
 				isload: false,
-				showscenelist:false,
+				showscenelist: false,
 				editableTabsValue: '',
 				editableTabs: [],
 				mapdata: {}
@@ -66,17 +75,18 @@
 						}
 						localStorage.setItem('projectPath', proPath);
 						//初始化数据
-						self.editableTabsValue = '';
+						self.d = '';
 						self.editableTabs = [];
-						self.mapdata = JSON.parse(data.toString());
 						self.isload = true;
-						self.showscenelist =true;
+						self.showscenelist = true;
+						d.setData(JSON.parse(data.toString()));
+						self.mapdata = d.data;
 					});
-				})
+				});
+
 			},
 			liclick(t) {
 				let etabs = this.editableTabs;
-				console.log(this);
 				let isnew = true;
 				etabs.forEach((f, index) => {
 					if (f.id == t.id) {
@@ -180,9 +190,10 @@
 	.el-card__body {
 		padding: 0px !important
 	}
-	.laya-content{
+
+	.laya-content {
 		background-color: #000;
-		height: 100%;
+		width: 100%;
 		height: 100%;
 		color: #fff;
 	}

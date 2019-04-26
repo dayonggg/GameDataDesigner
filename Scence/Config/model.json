@@ -1,0 +1,23 @@
+[
+    {
+        "id":"1",
+        "gid":"1",
+        "label":"战士",
+        "lm":"FOL_Foliage_08-FOL_Foliage_08.lm",
+        "icon":"bgb.png"
+    },
+    {
+        "id":"2",
+        "gid":"2",
+        "label":"战士",
+        "lm":"FOL_Foliage_08-FOL_Foliage_08.lm",
+        "icon":"bgb.png"
+    },
+    {
+        "id":"3",
+        "gid":"2",
+        "label":"战士",
+        "lm":"FOL_Foliage_08-FOL_Foliage_08.lm",
+        "icon":"bgb.png"
+    }
+]

@@ -15,7 +15,7 @@
 			<el-container class="main-scene">
 				<el-aside v-show="showscenelist" width="160px" class="main-scene-list">
 					<el-card class="box-card">
-						<div v-for="s in mapdata.maps" @click="liclick(s)" class="scene-item">
+						<div v-for="s in mapdata.levels" @click="liclick(s)" class="scene-item">
 							{{ s.title }}
 						</div>
 					</el-card>
@@ -29,10 +29,13 @@
 								</el-main>
 								<el-aside width="240px">
 									<el-collapse>
-										<el-collapse-item v-for="item in mapdata.lmgroup" :title="item.label" :name="item.typeid">
+										<el-collapse-item v-for="item in mapdata.modelgroups" :title="item.label" :name="item.id">
 											<el-row>
 												<el-col :span="6" v-for="lm in item.models">
-													<div>{{lm.label}}</div>
+													<div class="model">	
+														<img :src="[mapdata.path.ico+lm.icon]" width="32px" height="32px" />
+														<div class="model-label">{{lm.label}}</div>
+													</div>
 												</el-col>
 											</el-row>
 										</el-collapse-item>
@@ -68,22 +71,13 @@
 				let self = this;
 				ipc.ipcRenderer.send('open-project-file');
 				ipc.ipcRenderer.on('selected-project-file', (e, path) => {
-					let proPath = path.toString();
-					fs.readFile(proPath, function(err, data) {
-						if (err) {
-							throw err;
-						}
-						localStorage.setItem('projectPath', proPath);
-						//初始化数据
-						self.d = '';
-						self.editableTabs = [];
+					let proPath = path.toString()+"/";
+					d.init(proPath,function(){
+						self.mapdata = d.data;
 						self.isload = true;
 						self.showscenelist = true;
-						d.setData(JSON.parse(data.toString()));
-						self.mapdata = d.data;
-					});
+					})
 				});
-
 			},
 			liclick(t) {
 				let etabs = this.editableTabs;
@@ -190,7 +184,17 @@
 	.el-card__body {
 		padding: 0px !important
 	}
-
+	
+	.model{
+		text-align: center;
+		padding: 6px 3px;
+	}
+	
+	.model-label{
+		font-size: 9px;
+		margin-top: -5px;
+	}
+	
 	.laya-content {
 		background-color: #000;
 		width: 100%;

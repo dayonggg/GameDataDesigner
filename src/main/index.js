@@ -22,7 +22,8 @@ function createWindow () {
     useContentSize: true,
     width: 1200,
 		minWidth:1200,
-		minHeight:680
+		minHeight:680,
+		webPreferences:{webSecurity: false}
 		// frame:false
   })
 
@@ -50,8 +51,8 @@ app.on('activate', () => {
 // const{ipcMain,dialog}=require('election')
 ipcMain.on('open-project-file', (event) => {
 	dialog.showOpenDialog({
-		title:"打开项目配置文件",
-		properties:['openFile'],
+		title:"打开工程目录",
+		properties:['openDirectory'],
 		filters:[
 			{name:'Project',extensions:['json']}
 		]

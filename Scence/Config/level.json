@@ -1,0 +1,16 @@
+[
+    {
+        "id":"1",
+        "title":"第一关",
+        "text":"text1",
+        "scene":"111.ls",
+        "map":""
+    },
+    {
+        "id":"2",
+        "title":"第二关",
+        "text":"text2",
+        "scene":"222.ls",
+        "map":""
+    }
+]

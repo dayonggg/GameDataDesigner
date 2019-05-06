@@ -1,7 +1,8 @@
 {
     "lsPath":"./",
     "lmPath":"./Assets/",
+	"lmatPath":"./Assets/Materials/",
     "iconPath":"./Icons/",
-    "mapPath":"./Maps/",
+    "levelPath":"./Levels/",
     "configPath":"./Config/"
 }

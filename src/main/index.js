@@ -62,3 +62,31 @@ ipcMain.on('open-project-file', (event) => {
 		}
 	})
 })
+
+ipcMain.on('open-scene', (event) => {
+	dialog.showOpenDialog({
+		title:"选择模型图标",
+		properties:['openFile'],
+		filters:[
+			{name:'Laya Scene',extensions:['ls']}
+		]
+	},(files) => {
+		if(files){
+			event.sender.send('selected-scene',files)
+		}
+	})
+})
+
+ipcMain.on('open-ico', (event) => {
+	dialog.showOpenDialog({
+		title:"选择模型图标",
+		properties:['openFile'],
+		filters:[
+			{name:'Image',extensions:['png','jpg','jpeg','gif']}
+		]
+	},(files) => {
+		if(files){
+			event.sender.send('selected-ico',files)
+		}
+	})
+})

@@ -1,8 +1,9 @@
 import fs from 'fs'
+import path from 'path'
 
 export default {
 	root: '', //项目根目录
-	path: {}, //全路径
+	paths: {}, //全路径
 	data: {}, //工程文件数据
 	scenes: [], //场景
 	maps: [], //关卡数据
@@ -12,22 +13,24 @@ export default {
 	init: function(root, callback) { //设置数据
 		// this.data = obj;
 		this.root = root;
-		this.initData(root, callback);
+		console.log(this.root)
+		this.initData(this.root, callback);
 	},
 	initPath: function(root, configdata) { //设置资源路径
-		this.path.model = this.root + configdata.lmPath;
-		this.path.scene = this.root;
-		this.path.ico = this.root + configdata.iconPath;
-		this.path.map = this.root + configdata.levelPath;
-		this.path.config = root + configdata.configPath;
+		this.paths.model = path.join(root, configdata.lmPath);
+		this.paths.scene = path.join(root, configdata.lsPath);
+		this.paths.material = path.join(root, configdata.lmatPath);
+		this.paths.ico = path.join(root, configdata.iconPath);
+		this.paths.map = path.join(root, configdata.levelPath);
+		this.paths.config = path.join(root, configdata.configPath);
 	},
 	initData: function(root, callback) {
-		this.initPath(root, this.readConfig(this.root + 'config.json'));
-		this.data.path = this.path;
-		this.data.scenes = this.scenes = this.readConfig(this.path.config + 'sence.json');
-		this.data.modelgroups = this.modelgroups = this.readConfig(this.path.config + 'modelgroup.json');
-		this.data.models = this.models = this.readConfig(this.path.config + 'model.json');
-		this.data.levels = this.levels = this.readConfig(this.path.config + 'level.json');
+		this.initPath(root, this.readConfig(path.join(root, 'config.json')));
+		this.data.paths = this.paths;
+		this.data.scenes = this.scenes = this.readConfig(path.join(this.paths.config, 'sence.json'));
+		this.data.modelgroups = this.modelgroups = this.readConfig(path.join(this.paths.config, 'modelgroup.json'));
+		this.data.models = this.models = this.readConfig(path.join(this.paths.config, 'model.json'));
+		this.data.levels = this.levels = this.readConfig(path.join(this.paths.config, 'level.json'));
 
 		let self = this;
 		for (let i = 0; i < this.modelgroups.length; i++) {

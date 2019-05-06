@@ -1,0 +1,11 @@
+import './laya/lib/laya.core.js'
+import './laya/lib/laya.webgl.js'
+import './laya/lib/laya.ani.js'
+import './laya/lib/laya.particle.js'
+import './laya/lib/laya.filter.js'
+import './laya/lib/laya.ui.js'
+import './laya/lib/laya.html.js'
+import './laya/lib/laya.d3.js'
+import './laya/lib/laya.d3Plugin.js'
+import './laya/lib/laya.physics3D.js'
+

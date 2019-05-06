@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>game-runtime</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+		<script src="lib/laya/lib/laya.core.js"></script>
+		<script src="lib/laya/lib/laya.webgl.js"></script>
+		<script src="lib/laya/lib/laya.ani.js"></script>
+		<script src="lib/laya/lib/laya.particle.js"></script>
+		<!-- <script src="lib/laya/lib/laya.physics3D.js"></script> -->
+		<script src="lib/laya/lib/laya.filter.js"></script>
+		<script src="lib/laya/lib/laya.ui.js"></script>
+		<script src="lib/laya/lib/laya.html.js"></script>
+		<!-- <script src="lib/laya/lib/laya.tiledmap.js"></script> -->
+		<script src="lib/laya/lib/laya.d3.js"></script>
+		<script src="lib/laya/lib/laya.d3Plugin.js"></script>
+		<!-- <script src="lib/laya/lib/laya.pathfinding.js"></script> -->
+		<script src="lib/laya/lib/laya.physics3D.js"></script>
+		<!-- <script src="commonData.js"></script> -->
+	</head>
+
+	<body>
+
+		<h2>场景</h2>
+		<select id='selectScene'>
+			<!-- 添加一个option -->
+			<option>static/Conventional/Example_01_TotalProp_Scene_02.ls</option>
+			<option>static/Conventional/Example_01_TotalProp_Scene_02_.ls</option>
+			<option>static/Conventional/scene112.ls</option>
+		</select>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button onclick="window.openScene(document.querySelector('#selectScene').value);">打开场景</button>
+		<hr />
+		<h2>模型</h2>
+		<select id='selectModel'>
+			<option>static/Conventional/New.lh</option>
+		</select>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button onclick="window.openModel(document.querySelector('#selectModel').value);">打开模型</button>
+		<div id="laya"></div>
+		<script type="text/javascript" src="main.bundle.94f93ff2501fb93ac2d2.js"></script>
+		<script>
+			var data = window.parent["expandData"]();
+			console.log(data);
+		</script>
+	</body>
+</html>
